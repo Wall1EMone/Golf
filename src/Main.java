@@ -22,7 +22,7 @@ public class Main {
             if(choice == 5){
                 System.out.println("Tack och välkommen åter!");
                 scanner.nextLine();
-                break;
+                run = false;
             }
         }
 
