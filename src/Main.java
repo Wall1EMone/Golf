@@ -1,17 +1,19 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        List<Member> members = new ArrayList<>();
         boolean run = true;
 
         while(run){
             System.out.println("Välkommen till Mones golfshop");
             System.out.println("Gör ditt val");
             System.out.println();
-            System.out.println("1. Lägga till medlem");
+            System.out.println("1. Skapa medlem");
             System.out.println("2. Söka medlem");
             System.out.println("3. Ändra medlem");
             System.out.println("4. Lista på alla set");
@@ -22,12 +24,40 @@ public class Main {
             System.out.println("9. Avsluta");
 
             int choice = scanner.nextInt();
+            scanner.nextLine();
 
-            if(choice == 9){
-                System.out.println("Tack och välkommen åter!");
-                scanner.nextLine();
-                run = false;
+            switch(choice){
+                case 1:
+                    System.out.print("Namn: ");
+                    String name = scanner.nextLine();
+
+                    System.out.print("Efternamn: ");
+                    String lastName = scanner.nextLine();
+
+                    System.out.println("Handikapp: ");
+                    double hcp = scanner.nextDouble();
+                    scanner.nextLine();
+
+                    int id = members.size() + 1; // Id baserad på antal medlemmar i listan och siffran på iden går upp åt.
+                    Member member = new Member(name, lastName, true, id, "brons",new ArrayList<>(), hcp);
+                    members.add(member);
+                    member.addHistory("Medlem skapad: " + name + " " + lastName);
+
+                    System.out.println("Medlem skapad!");
+                    System.out.print("Namn: " + name);
+                    System.out.println("Efternamn: " + lastName);
+                    System.out.println("ID: " + id);
+
+                    break;
+
+                case 9:
+                    System.out.println("Välkommen åter!");
+                    run = false;
+                    break;
+                default:
+                    System.out.println("Skriva ett tal 1-10");
             }
+
 
         }
 
