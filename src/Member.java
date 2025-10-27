@@ -1,3 +1,5 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,7 +66,10 @@ public class Member {
         this.history = history;
     }
     public void addHistory(String input){
-        history.add(input);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss:SS");// noga med att "yyyy-MM-dd hh:mm:ss:SS" ska vara exakt så, annars blir siffror fel!
+        String timeS = LocalDateTime.now().format(formatter);
+        history.add("[" + timeS + "] " + input);
+    //    history.add("[" + java.time.LocalDateTime.now().toString().replace("T", " ") + "] " + input);//Tar även bort T och ersätter med mellanslag
     }
     //Hcp
     public double getHcp(){
