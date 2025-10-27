@@ -70,24 +70,27 @@ public class Main {
                             System.out.print("Skriv in ID nummer: ");
                             int idNum = scanner.nextInt();
                             //Kollar om id finns i listan och skriver ut info om true
-                            boolean found = false;
+                            boolean found2 = false;
                             for (Member m : members) {
                                 if (m.getId() == idNum) {
                                     m.info();
                                     System.out.println();
-                                    found = true;
+                                    found2 = true;
                                     break;
                                 }
                             }
-                            if (!found) {
+                            if (!found2) {
                                 System.out.println("Du är inte medlem!");
+                                continue;// Så att det går tillbaka i början utan att gå till meny
                             }
+                            break;//Bryta sig ut while loop när det hittat
+
                         } catch (Exception e) {
                             System.out.println("Fel: Skriv ditt id i tal!");
                             scanner.nextLine();
                         }
-                        break;
                     }
+                    break;
 
                 case 3:
                     while (true) {
