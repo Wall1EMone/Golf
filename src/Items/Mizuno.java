@@ -6,7 +6,7 @@ import java.util.List;
 public class Mizuno extends Item {
 
     public Mizuno(){
-        super("ST-Max", 500, new ArrayList<>());
+        super("Mizuno", 500, new ArrayList<>());
         List<String> clubs = new ArrayList<>();
         clubs.add("Driver: Mizuno ST-MAX 230 Driver");
         clubs.add("3 wood: Mizuno ST-MAX 230");

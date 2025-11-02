@@ -6,7 +6,7 @@ import java.util.List;
 public class Callaway extends Item {
 
     public Callaway(){
-        super("Paradym",500, new ArrayList<>());
+        super("Callaway",500, new ArrayList<>());
         List<String> clubs = new ArrayList<>();
         clubs.add("Driver: Paradym Drivers");
         clubs.add("3 wood: Paradym Fairway Woods");

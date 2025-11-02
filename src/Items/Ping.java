@@ -6,7 +6,7 @@ import java.util.List;
 public class Ping extends Item {
 
     public Ping(){
-        super("Max G440",500, new ArrayList<>());
+        super("Ping",500, new ArrayList<>());
         List<String> clubs = new ArrayList<>();
         clubs.add("Driver: G440 MAX");
         clubs.add("3 wood: G440 MAX");

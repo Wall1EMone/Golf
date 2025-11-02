@@ -1,5 +1,7 @@
 package Members;
 
+import PricePolicy.PricePolicy;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -10,9 +12,11 @@ public class Member {
     private String lastname;
     private boolean status;
     private int id;
+    private int rentalCount;
     private String level = "brons"; //Börjar alltid på brons
     private List<String> history = new ArrayList<>();
     private double hcp;
+    private PricePolicy pricePolicy;
 
 
     public Member(){
@@ -22,6 +26,7 @@ public class Member {
         this.lastname = lastname;
         this.status = status;
         this.id = id;
+        this.rentalCount = 0;
         this.level = level;
         this.history = history;
         this.hcp = hcp;
@@ -60,6 +65,9 @@ public class Member {
     public void setLevel(String level){
         this.level = level;
     }
+    public double getRentalPrice(double basePrice){
+        return pricePolicy.calculatePrice(basePrice);
+    }
     //List
     public List<String> getHistory(){
         return history;
@@ -86,6 +94,7 @@ public class Member {
         System.out.println("Status: " + (status ? "Medlem" : "Ej medlem"));//annan typ av if sats, (condition ? sant : falsk)
         System.out.println("Id: " + id);
         System.out.println("Level: " + level);
+        System.out.println("Antal hyrningar: " + rentalCount);
         System.out.println("Historik: " + history);
         System.out.println("Hcp: " + hcp);
     }

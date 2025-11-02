@@ -1,16 +1,25 @@
+import Inventory.Inventory;
+import Items.Item;
 import Members.Member;
 import Members.MemberRegistry;
+import PricePolicy.PricePolicy;
+import Rental.Rental;
+import Rental.RentalRegistry;
+import org.w3c.dom.html.HTMLAreaElement;
+import PricePolicy.Brons;
+import PricePolicy.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
+import java.security.Policy;
+import java.util.*;
 
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         MemberRegistry registry = new MemberRegistry();
+        Inventory inventory = new Inventory();
+        RentalRegistry rentalRegistry = new RentalRegistry();
+        Member member = new Member();
         boolean run = true;
 
         while(run){
@@ -21,7 +30,7 @@ public class Main {
             System.out.println("2. Söka medlem");
             System.out.println("3. Ändra medlem");
             System.out.println("4. Lista på alla set");
-            System.out.println("5. Kolla klubbor ett set");
+            System.out.println("5. Kolla klubbor i setet");
             System.out.println("6. Boka");
             System.out.println("7. Avsluta uthyrning");
             System.out.println("8. Summera intäkter");
@@ -190,6 +199,107 @@ public class Main {
                             scanner.nextLine();
                         }
                     }break;
+
+                case 4:
+                    System.out.println("Här är listan på alla golfset");
+                    inventory.showAllItems();
+                    System.out.println();
+                    break;
+                case 5:
+                    while(true){
+
+                            System.out.println("Skriv namn på set du vill kolla");
+                            String nameSet = scanner.nextLine();
+
+                            boolean found5 = false;
+                            for (Item ns : inventory.getItems()){
+                                if(ns.getName().equalsIgnoreCase(nameSet)){
+                                    ns.ShowInfo();
+                                    System.out.println();
+
+                                    found5 = true;
+                                    break;
+                                }
+                            }
+                            if (found5){
+                                break;
+                            }
+                            else{
+                                System.out.println("Setet du söker finns inte, eller skriv rätt namn!");
+                            }
+
+
+                    }
+                    break;
+                case 6:
+                    while (true){
+                        try {
+                            inventory.showAllItems();
+
+                            System.out.println("Ange id om du är medlem, annars skriv (0)");
+                            int id6 = scanner.nextInt();
+                            scanner.nextLine();
+
+                            System.out.print("Ange namn på golfset du vill boka: ");
+                            String setName6 = scanner.nextLine();
+
+                            Item chosen = null;
+                            for(Item item : inventory.getItems()){
+                                if(item.getName().equalsIgnoreCase(setName6)){
+                                    chosen = item;
+                                    break;
+                                }
+
+                            }
+                            if(chosen == null){
+                                System.out.print("Setet finns inte, försök igen!");
+                                continue;
+                            }
+                            double basePrice = 500;
+                            double finalPrice = basePrice;
+                            //Om medlem
+                            if(id6 != 0){
+                                Member member6 = registry.findId(id6);
+                                if(member6 != null) {
+                                    PricePolicy policy = null;
+                                    String level = member6.getLevel();
+
+                                    switch (level.toLowerCase()) {
+                                        case "brons":
+                                            policy = new Brons();
+                                            break;
+                                        case "silver":
+                                            policy = new Silver();
+                                            break;
+                                        case "guld":
+                                            policy = new Guld();
+                                            break;
+                                        default:
+                                            System.out.println("Ej medlem, fullpris.");
+
+                                    }
+                                    if(policy !=null){
+                                        finalPrice = policy.calculatePrice(basePrice);
+                                    }
+                                    System.out.println("Medlemsnivå: " + policy.getLevelName());
+                                }else{
+                                    System.out.println("Ej medlem, fullpris.");
+                                }
+                            }
+                            System.out.println("Bokning klar för " + chosen.getName());
+                            System.out.println("Pris: " + finalPrice + " kr");
+                            System.out.println();
+                            break;
+
+                        } catch (InputMismatchException e) {
+                            System.out.println("Skriv id i tal!");
+                            scanner.nextLine();
+                        } catch (Exception e){
+                            System.out.println("Skriv set namn med bokstäver");
+                        }
+
+                    }
+                    break;
 
 
                 case 9:

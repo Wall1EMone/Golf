@@ -6,7 +6,7 @@ import java.util.List;
 public class Cobra extends Item {
 
     public Cobra(){
-        super("Max", 500,new ArrayList<>());
+        super("Cobra", 500,new ArrayList<>());
         List<String> clubs = new ArrayList<>();
         clubs.add("Driver: DS-ADAPT MAX-K Driver ");
         clubs.add("3 wood: DS-ADAPT X Fairway");

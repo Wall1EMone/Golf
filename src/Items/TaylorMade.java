@@ -6,7 +6,7 @@ import java.util.List;
 public class TaylorMade extends Item {
 
     public TaylorMade(){
-        super("Qi35", 500, new ArrayList<>());
+        super("TaylorMade", 500, new ArrayList<>());
         List<String> clubs = new ArrayList<>();
         clubs.add("Driver: Qi35 Max Designer Series Driver");
         clubs.add("3 wood: Qi35 Max Fairway");

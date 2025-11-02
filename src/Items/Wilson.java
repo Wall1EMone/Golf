@@ -15,6 +15,8 @@ public class Wilson extends Item {
         clubs.add("4 - P: Wilson Staff Model® Blades");
         clubs.add("52, 56, 60: Infinite Wedge");
         clubs.add("Putter: Infinite Buckingham Putter");
+
+        setClubs(clubs);
     }
 
     @Override
