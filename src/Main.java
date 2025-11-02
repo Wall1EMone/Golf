@@ -232,7 +232,7 @@ public class Main {
                     }
                     break;
                 case 6:
-                    while (true){
+                    while (true) {
                         try {
                             inventory.showAllItems();
 
@@ -245,23 +245,25 @@ public class Main {
                             String setName6 = scanner.nextLine();
 
                             Item chosen = null;
-                            for(Item item : inventory.getItems()){
-                                if(item.getName().equalsIgnoreCase(setName6)){
+                            for (Item item : inventory.getItems()) {
+                                if (item.getName().equalsIgnoreCase(setName6)) {
                                     chosen = item;
                                     break;
                                 }
-
                             }
-                            if(chosen == null){
-                                System.out.print("Setet finns inte, försök igen!");
+
+                            if (chosen == null) {
+                                System.out.println("Setet finns inte, försök igen!");
                                 continue;
                             }
+
                             double basePrice = 500;
                             double finalPrice = basePrice;
-                            //Om medlem
-                            if(id6 != 0){
-                                Member member6 = registry.findId(id6);
-                                if(member6 != null) {
+
+                            Member member6 = null; // deklarera utanför if-satsen
+                            if (id6 != 0) {
+                                member6 = registry.findId(id6);
+                                if (member6 != null) {
                                     member6.BookingCount();
 
                                     PricePolicy policy = null;
@@ -270,42 +272,39 @@ public class Main {
                                     registry.addHistory("Bokat: " + setName6);
 
                                     switch (level.toLowerCase()) {
-                                        case "brons":
-                                            policy = new Brons();
-                                            break;
-                                        case "silver":
-                                            policy = new Silver();
-                                            break;
-                                        case "guld":
-                                            policy = new Guld();
-                                            break;
-                                        default:
-                                            System.out.println("Ej medlem, fullpris.");
-
+                                        case "brons": policy = new Brons(); break;
+                                        case "silver": policy = new Silver(); break;
+                                        case "guld": policy = new Guld(); break;
+                                        default: System.out.println("Ej medlem, fullpris.");
                                     }
-                                    if(policy !=null){
+
+                                    if (policy != null) {
                                         finalPrice = policy.calculatePrice(basePrice);
+                                        System.out.println("Medlemsnivå: " + policy.getLevelName());
                                     }
-
-                                    System.out.println("Medlemsnivå: " + policy.getLevelName());
-                                }else{
+                                } else {
                                     System.out.println("Ej medlem, fullpris.");
                                 }
                             }
+
+                            // Skapa rental oavsett medlem eller ej
+                            Rental newRental = new Rental(member6, chosen, java.time.LocalDateTime.now(), java.time.LocalDateTime.now().plusHours(24), true, finalPrice);
+                            rentalRegistry.addRental(newRental);
+
                             System.out.println("Bokning klar för " + chosen.getName());
-                            System.out.println("Pris: " + finalPrice + " kr. 5% rabbat.");
+                            System.out.println("Pris: " + finalPrice + " kr");
                             System.out.println();
                             break;
 
                         } catch (InputMismatchException e) {
                             System.out.println("Skriv id i tal!");
                             scanner.nextLine();
-                        } catch (Exception e){
+                        } catch (Exception e) {
                             System.out.println("Skriv set namn med bokstäver");
                         }
-
                     }
                     break;
+
                 //Avsluta bokning
                 case 7:
                     while (true) {
@@ -359,9 +358,12 @@ public class Main {
                     }break;
                 //Intäkter
                 case 8:
-
-
-
+                    double totalIncome = 0;
+                    for (Rental r : rentalRegistry.getAllRentals()) {
+                        totalIncome += r.getTotalPrice();
+                    }
+                    System.out.println("Totala intäkter: " + totalIncome + " kr");
+                    break;
 
 
                 case 9:
