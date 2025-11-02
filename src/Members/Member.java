@@ -17,6 +17,7 @@ public class Member {
     private List<String> history = new ArrayList<>();
     private double hcp;
     private PricePolicy pricePolicy;
+    private int bookingCount;
 
 
     public Member(){
@@ -81,6 +82,24 @@ public class Member {
         history.add("[" + timeS + "] " + input);
     //    history.add("[" + java.time.LocalDateTime.now().toString().replace("T", " ") + "] " + input);//Tar även bort T och ersätter med mellanslag
     }
+    //räknar antal bokningar och uppgraderas
+    public int getBookingCount(){
+        return bookingCount;
+    }
+    public void BookingCount(){
+        this.bookingCount++;
+        checkLevelUpgrade();
+    }
+    private void checkLevelUpgrade(){
+        if(bookingCount >=10 && level.equalsIgnoreCase("brons")){
+            level = "silver";
+            System.out.println("Grattis! Du har uppgraderas till silver-nivå.");
+        }
+        else if (bookingCount >=20 && level.equalsIgnoreCase("silver")){
+            level = "guld";
+            System.out.println("Grattis! Du har uppgraderas till guld-nivå.");
+        }
+    }
     //Hcp
     public double getHcp(){
         return hcp;
@@ -96,6 +115,7 @@ public class Member {
         System.out.println("Level: " + level);
         System.out.println("Antal hyrningar: " + rentalCount);
         System.out.println("Historik: " + history);
+        System.out.println("Antal bokningar: " + getBookingCount());
         System.out.println("Hcp: " + hcp);
     }
 }
