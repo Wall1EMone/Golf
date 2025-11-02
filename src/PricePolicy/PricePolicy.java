@@ -1,4 +1,6 @@
 package PricePolicy;
 
-public class PricePolicy {
+public interface PricePolicy {
+    double calculatePrice (double basePrice);
+    String getLevelName();
 }
