@@ -49,7 +49,7 @@ public class Main {
                             System.out.print("Efternamn: ");
                             String lastName = scanner.nextLine();
 
-                            System.out.println("Handikapp: ");
+                            System.out.print("Handikapp: ");
                             double hcp = scanner.nextDouble();
                             scanner.nextLine();
 
@@ -236,6 +236,7 @@ public class Main {
                         try {
                             inventory.showAllItems();
 
+                            System.out.println("DU KAN BARA BOKA GOLFSET MAX I 24 TIMMAR!");
                             System.out.println("Ange id om du är medlem, annars skriv (0)");
                             int id6 = scanner.nextInt();
                             scanner.nextLine();
@@ -261,8 +262,12 @@ public class Main {
                             if(id6 != 0){
                                 Member member6 = registry.findId(id6);
                                 if(member6 != null) {
+                                    member6.BookingCount();
+
                                     PricePolicy policy = null;
                                     String level = member6.getLevel();
+                                    member6.addHistory("Bokat: " + setName6);
+                                    registry.addHistory("Bokat: " + setName6);
 
                                     switch (level.toLowerCase()) {
                                         case "brons":
@@ -281,13 +286,14 @@ public class Main {
                                     if(policy !=null){
                                         finalPrice = policy.calculatePrice(basePrice);
                                     }
+
                                     System.out.println("Medlemsnivå: " + policy.getLevelName());
                                 }else{
                                     System.out.println("Ej medlem, fullpris.");
                                 }
                             }
                             System.out.println("Bokning klar för " + chosen.getName());
-                            System.out.println("Pris: " + finalPrice + " kr");
+                            System.out.println("Pris: " + finalPrice + " kr. 5% rabbat.");
                             System.out.println();
                             break;
 
@@ -300,6 +306,62 @@ public class Main {
 
                     }
                     break;
+                //Avsluta bokning
+                case 7:
+                    while (true) {
+                        try {
+
+                            System.out.println("Ange id om du är medlem, annars skriv (0)");
+                            int id7 = scanner.nextInt();
+                            scanner.nextLine();
+
+                            System.out.print("Ange namn på golfset du vill återlämna: ");
+                            String setName7 = scanner.nextLine();
+
+                            Item returned = null;
+                            for(Item item : inventory.getItems()){
+                                if(item.getName().equalsIgnoreCase(setName7)){
+                                    returned = item;
+                                    break;
+                                }
+
+                            }
+                            if(returned == null){
+                                System.out.print("Setet finns inte, försök igen!");
+                                continue;
+                            }
+
+                            if(id7 != 0){
+                                Member member7 = registry.findId(id7);
+                                if(member7 != null) {
+
+                                    member7.addHistory("Återlämnat: " + setName7);
+                                    registry.addHistory("Återlämnat: " + setName7);
+
+                                    System.out.println("Tack " + member7.getName() + " för denna gång");
+                                    System.out.println("Välkommen åter!");
+                                    System.out.println();
+
+
+                                }else{
+                                    System.out.println("Tack för denna gång!");
+                                    System.out.println("Välkommen åter!");
+                                    System.out.println();
+                                }
+                            }else{
+                                System.out.println("Tack för denna gång!");
+                            }
+                            break;
+
+                        } catch (Exception e) {
+                            System.out.println("Har du skrivit rätt??");
+                        }
+                    }break;
+                //Intäkter
+                case 8:
+
+
+
 
 
                 case 9:
